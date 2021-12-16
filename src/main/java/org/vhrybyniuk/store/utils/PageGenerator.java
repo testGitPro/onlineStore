@@ -29,18 +29,18 @@ public class PageGenerator {
         Writer stream = new StringWriter();
         try {
             Template template = configuration.getTemplate(PACKAGE_HTML + File.separator + filename);
-            data.replaceAll((key, value) -> value == null ? "" : value);
-
             template.process(data, stream);
         } catch (IOException | TemplateException e) {
             throw new RuntimeException(e);
         }
         return stream.toString();
+
     }
 
     public String getPage(String filename) {
         return getPagePath(Paths.get(PACKAGE_HTML, filename));
     }
+
     public String getPagePath(Path path) {
         String result = "";
 
@@ -51,6 +51,12 @@ public class PageGenerator {
         }
         return result;
     }
+
+    public String getPageWithMessage(String fileName, String message) {
+        Map<String, Object> parameters = Map.of("errorMessage", message);
+        return getPage(fileName, parameters);
+    }
+
     private PageGenerator() {
         configuration = new Configuration();
     }

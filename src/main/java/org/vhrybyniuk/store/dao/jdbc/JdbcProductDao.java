@@ -17,9 +17,10 @@ public class JdbcProductDao implements ProductDao {
 
     private static final ProductRowMapper PRODUCT_ROW_MAPPER = new ProductRowMapper();
 
+    ConnectionDB connectionDB = new ConnectionDB();
     @Override
     public List<Product> findAll() {
-        try (Connection connection = getConnection();
+        try (Connection connection = connectionDB.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_SQL);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -39,7 +40,7 @@ public class JdbcProductDao implements ProductDao {
     @Override
         public void add(String name, double price) {
             try {
-                Connection connection = getConnection();
+                Connection connection = connectionDB.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL);
                 preparedStatement.setString(1, name);
                 preparedStatement.setDouble(2, price);
@@ -54,7 +55,7 @@ public class JdbcProductDao implements ProductDao {
     @Override
     public void update(int id, String name, double price) {
         try {
-            Connection connection = getConnection();
+            Connection connection = connectionDB.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL);
             preparedStatement.setString(1, name);
             preparedStatement.setDouble(2, price);
@@ -73,7 +74,7 @@ public class JdbcProductDao implements ProductDao {
         Product product = null;
 
         try {
-            Connection connection = getConnection();
+            Connection connection = connectionDB.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID_SQL);
             preparedStatement.setInt(1, id);
 
@@ -91,7 +92,8 @@ public class JdbcProductDao implements ProductDao {
     @Override
     public void delete(int id) {
         try {
-            Connection connection = getConnection();
+
+            Connection connection = connectionDB.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_ID_SQL);
             preparedStatement.setInt(1, id);
 
@@ -102,9 +104,4 @@ public class JdbcProductDao implements ProductDao {
         }
     }
 
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:postgresql://localhost:5433/store", "postgres", "1111");
-
     }
-}

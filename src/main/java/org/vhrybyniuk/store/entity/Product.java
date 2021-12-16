@@ -2,7 +2,6 @@ package org.vhrybyniuk.store.entity;
 
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -17,5 +16,6 @@ public class Product {
     private double price;
     private LocalDateTime created;
 
+    
 
 }
