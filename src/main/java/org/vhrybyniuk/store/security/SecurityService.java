@@ -16,6 +16,9 @@ public class SecurityService {
 
     private ArrayList<String> tokenList = new ArrayList<>();
 
+    public SecurityService(JdbcUserDao jdbcUserDao) {
+        this.jdbcUserDao = jdbcUserDao;
+    }
 
     public boolean isAuth(String userToken) {
         return tokenList.contains(userToken) ? true : false;

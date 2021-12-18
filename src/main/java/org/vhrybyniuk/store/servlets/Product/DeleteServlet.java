@@ -11,7 +11,11 @@ import java.io.IOException;
 
 public class DeleteServlet extends HttpServlet {
     JdbcProductDao jdbcProductDao = new JdbcProductDao();
-    SecurityService securityService = new SecurityService();
+    SecurityService securityService ;
+
+    public DeleteServlet(SecurityService securityService) {
+        this.securityService = securityService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

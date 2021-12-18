@@ -18,8 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegistrationServlet extends HttpServlet {
-    SecurityService securityService = new SecurityService();
+
     JdbcUserDao jdbcUserDao = new JdbcUserDao();
+    SecurityService securityService = new SecurityService(jdbcUserDao);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,11 +38,20 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userToken = securityService.getUserToken(request);
+        String errorMessage = "";
         if (!securityService.isAuth(userToken)) {
 
             String user_name = request.getParameter("user_name");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
+            String password2 = request.getParameter("password2");
+
+            if (!password2.equals(password)) {
+                errorMessage = "Password mismatch";
+                response.getWriter().print(
+                        PageGenerator.generate().getPageWithMessage("ftl/registration.html", errorMessage));
+                return;
+            }
             User user = User.builder()
                     .user_name(user_name)
                     .email(email)
@@ -53,7 +63,7 @@ public class RegistrationServlet extends HttpServlet {
                     jdbcUserDao.addUser(user);
                     response.sendRedirect("/login");
                 } else {
-                    String errorMessage = "A user with the same email address already exists";
+                    errorMessage = "A user with the same email address already exists";
                     response.getWriter().print(
                             PageGenerator.generate().getPageWithMessage("ftl/registration.html", errorMessage));
                 }

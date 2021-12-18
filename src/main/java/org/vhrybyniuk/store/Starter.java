@@ -3,6 +3,9 @@ package org.vhrybyniuk.store;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.vhrybyniuk.store.dao.jdbc.JdbcProductDao;
+import org.vhrybyniuk.store.dao.jdbc.JdbcUserDao;
+import org.vhrybyniuk.store.security.SecurityService;
 import org.vhrybyniuk.store.servlets.Product.AddServlet;
 import org.vhrybyniuk.store.servlets.Product.DeleteServlet;
 import org.vhrybyniuk.store.servlets.Product.EditServlet;
@@ -16,12 +19,19 @@ public class Starter {
     private static final int DEFAULT_PORT = 8080;
 
     public static void main(String[] args) throws Exception {
-        ProductsServlet productsServlet = new ProductsServlet();
-        AddServlet addServlet = new AddServlet();
-        EditServlet editServlet = new EditServlet();
-        DeleteServlet deleteServlet = new DeleteServlet();
-        LogInServlet logInServlet = new LogInServlet();
-        LogOutServlet logOutServlet = new LogOutServlet();
+
+        JdbcProductDao jdbcProductDao = new JdbcProductDao();
+        JdbcUserDao jdbcUserDao = new JdbcUserDao();
+
+        SecurityService securityService = new SecurityService(jdbcUserDao);
+
+
+        ProductsServlet productsServlet = new ProductsServlet(securityService);
+        AddServlet addServlet = new AddServlet(securityService);
+        EditServlet editServlet = new EditServlet(securityService);
+        DeleteServlet deleteServlet = new DeleteServlet(securityService);
+        LogInServlet logInServlet = new LogInServlet(securityService);
+        LogOutServlet logOutServlet = new LogOutServlet(securityService);
         RegistrationServlet registrationServlet = new RegistrationServlet();
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 

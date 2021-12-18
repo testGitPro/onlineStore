@@ -14,7 +14,11 @@ import java.util.Map;
 
 public class EditServlet extends HttpServlet {
     JdbcProductDao jdbcProductDao = new JdbcProductDao();
-    SecurityService securityService = new SecurityService();
+    SecurityService securityService ;
+
+    public EditServlet(SecurityService securityService) {
+        this.securityService = securityService;
+    }
 
 
     @Override

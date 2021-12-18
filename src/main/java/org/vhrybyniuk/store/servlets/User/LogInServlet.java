@@ -13,7 +13,11 @@ import java.io.IOException;
 
 
 public class LogInServlet extends HttpServlet {
-    SecurityService securityService = new SecurityService();
+    private SecurityService securityService;
+
+    public LogInServlet(SecurityService securityService) {
+        this.securityService = securityService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

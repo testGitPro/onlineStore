@@ -15,8 +15,13 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductsServlet extends HttpServlet {
-    SecurityService securityService = new SecurityService();
+    SecurityService securityService ;
     JdbcProductDao jdbcProductDao = new JdbcProductDao();
+
+    public ProductsServlet(SecurityService securityService) {
+        this.securityService = securityService;
+    }
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

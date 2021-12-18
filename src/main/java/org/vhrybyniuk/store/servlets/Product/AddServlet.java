@@ -12,7 +12,11 @@ import java.io.IOException;
 
 public class AddServlet extends HttpServlet {
     JdbcProductDao jdbcProductDao = new JdbcProductDao();
-    SecurityService securityService = new SecurityService();
+    SecurityService securityService ;
+
+    public AddServlet(SecurityService securityService) {
+        this.securityService = securityService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
