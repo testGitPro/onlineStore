@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class DeleteServlet extends HttpServlet {
     JdbcProductDao jdbcProductDao = new JdbcProductDao();
-    SecurityService securityService ;
+    private SecurityService securityService ;
 
     public DeleteServlet(SecurityService securityService) {
         this.securityService = securityService;

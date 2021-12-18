@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductsServlet extends HttpServlet {
-    SecurityService securityService ;
+    private SecurityService securityService ;
     JdbcProductDao jdbcProductDao = new JdbcProductDao();
 
     public ProductsServlet(SecurityService securityService) {

@@ -12,8 +12,7 @@ import java.io.IOException;
 
 public class AddServlet extends HttpServlet {
     JdbcProductDao jdbcProductDao = new JdbcProductDao();
-    SecurityService securityService ;
-
+    private  SecurityService securityService ;
     public AddServlet(SecurityService securityService) {
         this.securityService = securityService;
     }

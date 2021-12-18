@@ -6,13 +6,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.vhrybyniuk.store.security.SecurityService;
-import org.vhrybyniuk.store.utils.PageGenerator;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class LogOutServlet extends HttpServlet {
-    SecurityService securityService;
+    private SecurityService securityService;
 
     public LogOutServlet(SecurityService securityService) {
         this.securityService = securityService;
